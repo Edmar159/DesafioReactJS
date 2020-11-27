@@ -12,12 +12,16 @@ function App() {
       url: 'http://github.com/',
       techs: ''
   })
+
+    setRepositories([...repositories,response.data]);
   }
 
   async function handleRemoveRepository(id) {
     // Remover um repositório da sua API: Para cada item da sua lista, deve possuir um botão com o texto Remover que, 
     // ao clicar, irá chamar uma função para remover esse item da lista do seu frontend e da sua API.
     api.delete(`/repositories/`+id);
+    
+    setRepositories(repositories.filter(repo => repo.id !== id));
   }
 
   const [repositories, setRepositories] = useState ([]);
@@ -26,7 +30,7 @@ function App() {
     api.get('repositories').then(response => {
       setRepositories(response.data);
     })
-},[handleAddRepository,handleRemoveRepository]) 
+},[]) 
   
   return (
     <div>
